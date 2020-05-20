@@ -1,0 +1,19 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: ceph-route
+  namespace: rook-ceph
+  labels:
+    app: rook-ceph-rgw
+    rook_cluster: rook-ceph
+    rook_object_store: my-store
+  annotations:
+   openshift.io/host.generated: 'true'
+spec:
+  to:
+    kind: Service
+    name: rook-ceph-rgw-my-store
+    weight: 100
+  port:
+    targetPort: http
+  wildcardPolicy: None
